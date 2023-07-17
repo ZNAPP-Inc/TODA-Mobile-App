@@ -1,7 +1,9 @@
 package com.znapp.toda
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -19,40 +21,70 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.znapp.toda.ui.composables.RoundedButton
 import com.znapp.toda.ui.theme.Montserrat
+import com.znapp.toda.ui.theme.TODATheme
 
 @Composable
 fun WelcomeScreen() {
     Box(
-        modifier = with (Modifier){
+        modifier = with(Modifier) {
             fillMaxSize()
-                paint(
-                    painterResource(id = R.drawable.toda_welcome_bg),
-                    contentScale = ContentScale.FillBounds)
+            paint(
+                painterResource(id = R.drawable.toda_welcome_bg),
+                contentScale = ContentScale.FillBounds
+            )
 
         })
     {}
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .wrapContentSize(Alignment.Center)
-    ) {
-        Text(
-            text = "Welcome to TODA",
-            color = Color.White,
-            fontFamily = Montserrat,
-            fontWeight = FontWeight.Bold,
-            fontSize = 24.sp,
-            textAlign = TextAlign.Center)
+        TODATheme {
+            Column (
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
 
-        Text(text = "   Log in or Sign up to continue",
-            color = Color.White,
-            fontFamily = Montserrat,
-            fontWeight = FontWeight.Medium,
-            fontSize = 14.sp,
-            textAlign = TextAlign.Center)
+                Spacer(modifier = Modifier.height(90.dp)
+                )
+
+                Text(
+                    text = "Welcome to TODA",
+                    color = Color.White,
+                    fontFamily = Montserrat,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 24.sp,
+                    textAlign = TextAlign.Center
+                )
+
+                Text(
+                    text = "Log in or Sign up to continue",
+                    color = Color.White,
+                    fontFamily = Montserrat,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 14.sp,
+                    textAlign = TextAlign.Center
+                )
+
+                Spacer(modifier = Modifier.height(15.dp)
+                )
+
+                RoundedButton(text = " Continue with Google") {
+                }
+
+                Spacer(modifier = Modifier.height(27.dp)
+                )
+
+                Text(
+                    text = "Already have an account?",
+                    color = Color.White,
+                    fontFamily = Montserrat,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 14.sp,
+                    textAlign = TextAlign.Center
+                )
+            }
+        }
     }
-}
 @Preview
 @Composable
 fun WelcomeScreenPreview() {

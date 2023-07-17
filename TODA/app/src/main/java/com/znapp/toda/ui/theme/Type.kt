@@ -4,6 +4,7 @@ import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.znapp.toda.R
@@ -15,6 +16,13 @@ val Montserrat = FontFamily(
 
 val PublicSans = FontFamily(
     Font(R.font.publicsans_semi_bold, FontWeight.SemiBold)
+)
+
+val FontAwesome = FontFamily(
+    Font(R.font.fa_brands_400, FontWeight.Normal),
+    Font(R.font.fa_light_300, FontWeight.Light),
+    Font(R.font.fa_regular_400),
+    Font(R.font.fa_solid_900)
 )
 
 // Set of Material typography styles to start with
