@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="btn_get_location" type="id" />
+    <item name="map" type="id" />
+</resources>
