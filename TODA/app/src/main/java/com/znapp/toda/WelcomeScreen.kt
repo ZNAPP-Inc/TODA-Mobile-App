@@ -21,6 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.znapp.toda.ui.composables.RoundedButtonEmail
 import com.znapp.toda.ui.composables.RoundedButtonGoogle
 import com.znapp.toda.ui.composables.RoundedButtonTODA
 import com.znapp.toda.ui.theme.Montserrat
@@ -45,7 +46,7 @@ fun WelcomeScreen() {
                 verticalArrangement = Arrangement.Center
             ) {
 
-                Spacer(modifier = Modifier.height(90.dp)
+                Spacer(modifier = Modifier.height(270.dp)
                 )
 
                 Text(
@@ -67,6 +68,12 @@ fun WelcomeScreen() {
                 )
 
                 Spacer(modifier = Modifier.height(15.dp)
+                )
+
+                RoundedButtonEmail(text = " Sign up with Email") {
+                }
+
+                Spacer(modifier = Modifier.height(13.dp)
                 )
 
                 RoundedButtonGoogle(text = " Continue with Google") {

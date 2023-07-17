@@ -3,9 +3,11 @@ package com.znapp.toda.ui.composables
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -57,6 +59,40 @@ fun RoundedButtonGoogle(
 }
 
 @Composable
+fun RoundedButtonEmail(
+    text: String,
+    modifier: Modifier = Modifier,
+    onClick: ()->Unit
+
+){
+
+    Button(
+        onClick = onClick,
+        modifier = modifier,
+        shape = CircleShape,
+        elevation = ButtonDefaults.buttonElevation(0.dp,0.dp),
+        contentPadding = PaddingValues(20.dp,12.dp),
+        border = BorderStroke(2.dp,Color.White),
+        colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent, contentColor = Color.White)
+    ) {
+        Icon(
+            imageVector = Icons.Outlined.Email,
+            contentDescription = null,
+            modifier = Modifier
+                .padding(end = 4.dp)
+                .size(16.dp)
+        )
+        Text(text = text,
+            color = Color.White,
+            fontFamily = PublicSans,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 14.sp,
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
+@Composable
 fun RoundedButtonTODA(
     text: String,
     modifier: Modifier = Modifier,
@@ -75,7 +111,9 @@ fun RoundedButtonTODA(
         Icon(
             imageVector = Icons.Default.AccountCircle,
             contentDescription = null,
-            modifier = Modifier.padding(end = 4.dp)
+            modifier = Modifier
+                .padding(end = 4.dp)
+                .size(18.dp)
         )
         Text(text = text,
             color = Color.Black,
@@ -101,6 +139,15 @@ fun RoundedButtonGooglePreview() {
 fun RoundedButtonTODAPreview() {
     TODATheme {
         RoundedButtonTODA(text = " Log in with TODA Account") {
+        }
+    }
+}
+
+@Preview
+@Composable
+fun RoundedButtonEmailPreview() {
+    TODATheme {
+        RoundedButtonEmail(text = " Sign up with Email") {
         }
     }
 }
