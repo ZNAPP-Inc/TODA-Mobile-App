@@ -21,7 +21,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.znapp.toda.ui.composables.RoundedButton
+import com.znapp.toda.ui.composables.RoundedButtonGoogle
+import com.znapp.toda.ui.composables.RoundedButtonTODA
 import com.znapp.toda.ui.theme.Montserrat
 import com.znapp.toda.ui.theme.TODATheme
 
@@ -68,7 +69,7 @@ fun WelcomeScreen() {
                 Spacer(modifier = Modifier.height(15.dp)
                 )
 
-                RoundedButton(text = " Continue with Google") {
+                RoundedButtonGoogle(text = " Continue with Google") {
                 }
 
                 Spacer(modifier = Modifier.height(27.dp)
@@ -80,11 +81,19 @@ fun WelcomeScreen() {
                     fontFamily = Montserrat,
                     fontWeight = FontWeight.Medium,
                     fontSize = 14.sp,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
                 )
+
+                Spacer(modifier = Modifier.height(15.dp)
+                )
+
+                TODATheme {
+                    RoundedButtonTODA(text = " Log in with TODA Account") {
+                    }
             }
         }
     }
+}
 @Preview
 @Composable
 fun WelcomeScreenPreview() {
