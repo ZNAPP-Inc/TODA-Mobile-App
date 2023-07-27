@@ -125,6 +125,58 @@ fun RoundedButtonTODA(
     }
 }
 
+@Composable
+fun RoundedButtonSignup(
+    text: String,
+    modifier: Modifier = Modifier,
+    onClick: ()->Unit
+
+){
+
+    Button(
+        onClick = onClick,
+        modifier = modifier,
+        shape = CircleShape,
+        elevation = ButtonDefaults.buttonElevation(0.dp,0.dp),
+        contentPadding = PaddingValues(20.dp,12.dp),
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1DB954), contentColor = Color.Unspecified)
+    ) {
+        Text(text = text,
+            color = Color.Black,
+            fontFamily = PublicSans,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 14.sp,
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
+@Composable
+fun RoundedButtonLogin(
+    text: String,
+    modifier: Modifier = Modifier,
+    onClick: ()->Unit
+
+){
+
+    Button(
+        onClick = onClick,
+        modifier = modifier,
+        shape = CircleShape,
+        elevation = ButtonDefaults.buttonElevation(0.dp,0.dp),
+        contentPadding = PaddingValues(20.dp,12.dp),
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1DB954), contentColor = Color.Unspecified)
+    ) {
+        Text(text = text,
+            color = Color.Black,
+            fontFamily = PublicSans,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 14.sp,
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
 @Preview
 @Composable
 fun RoundedButtonGooglePreview() {
@@ -142,6 +194,26 @@ fun RoundedButtonTODAPreview() {
         }
     }
 }
+
+@Preview
+@Composable
+fun RoundedButtonSignupPreview() {
+    TODATheme {
+        RoundedButtonSignup(text = "Sign up") {
+        }
+    }
+}
+
+@Preview
+@Composable
+fun RoundedButtonLoginPreview() {
+    TODATheme {
+        RoundedButtonLogin(text = "Login") {
+        }
+    }
+}
+
+
 
 @Preview
 @Composable
