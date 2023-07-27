@@ -1,77 +1,148 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.toda
 
-
+import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
+import com.directions.route.AbstractRouting
+import com.directions.route.Route
+import com.directions.route.RouteException
+import com.directions.route.Routing
+import com.directions.route.RoutingListener
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.Polyline
+import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.material.snackbar.Snackbar
 
 
-class MainActivity : AppCompatActivity(), OnMapReadyCallback {
+class MainActivity : FragmentActivity(), OnMapReadyCallback,
+    GoogleApiClient.OnConnectionFailedListener,
+    RoutingListener {
+    //google map object
+    private var mMap: GoogleMap? = null
 
-    private var mapFragment: SupportMapFragment?= null
+    //current and destination location objects
+    var myLocation: Location? = null
+    var destinationLocation: Location? = null
+    protected var start: LatLng? = null
+    protected var end: LatLng? = null
+    var locationPermission = false
 
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-
+    //polyline object
+    private var polylines: MutableList<Polyline>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setupmap()
 
+        //request location permission.
+        requestPermission()
 
-        fusedLocationProviderClient=LocationServices.getFusedLocationProviderClient(this)
-
-        findViewById<Button>(R.id.btn_get_location).setOnClickListener{
-            fetchLocation()
-        }
-    }
-
-    private fun setupmap() {
-        mapFragment= supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+        //init google map fragment to show map.
+        val mapFragment = supportFragmentManager
+            .findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
+
     }
 
-    private fun fetchLocation() {
-        val task = fusedLocationProviderClient.lastLocation
-
-        if(ActivityCompat.checkSelfPermission(this,android.Manifest.permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED && ActivityCompat
-                .checkSelfPermission(this,android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
-        ){
-            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),101)
-            return
-
+    private fun requestPermission() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+                LOCATION_REQUEST_CODE
+            )
+        } else {
+            locationPermission = true
         }
-        task.addOnSuccessListener {
-            if(it != null){
-                Toast.makeText(applicationContext, "${it.latitude} ${it.longitude}", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray,
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            LOCATION_REQUEST_CODE -> {
+                if (grantResults.size > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                ) {
+                    //if permission granted.
+                    locationPermission = true
+                    getMyLocation()
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return
             }
         }
     }
 
+    //to get user location
+    private fun getMyLocation() {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+        mMap!!.isMyLocationEnabled = true
+        mMap!!.setOnMyLocationChangeListener { location ->
+            myLocation = location
+            val ltlng = LatLng(location.latitude, location.longitude)
+            val cameraUpdate = CameraUpdateFactory.newLatLngZoom(ltlng, 16f)
+            mMap!!.animateCamera(cameraUpdate)
+        }
+
+        //get destination location when user click on map
+        mMap!!.setOnMapClickListener { latLng ->
+            end = latLng
+            mMap!!.clear()
+            start = LatLng(myLocation!!.latitude, myLocation!!.longitude)
+            //start route finding
+            Findroutes(start, end)
+        }
+    }
+
     override fun onMapReady(googleMap: GoogleMap) {
-        var mMap = googleMap
+        mMap = googleMap
+        if (locationPermission) {
+            getMyLocation()
+        }
 
+        //val latlonPUPCEA = LatLng(14.5988936, 121.0053501)
 
-        val latlon0 = LatLng(14.5988936, 121.0053501)
 
         //Manila
         val latlon1 = LatLng(14.600819,121.004582)
@@ -84,70 +155,104 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         val latlon6 = LatLng(14.641177,121.074379)
         val latlon7 = LatLng(14.632584,121.073613)
 
-
-        val markerView= (getSystemService(LAYOUT_INFLATER_SERVICE)as LayoutInflater).inflate(R.layout.marker_layout, null)
-        //val text= markerView.findViewById<TextView>(R.id.markerText)
-        val cardView1= markerView.findViewById<CardView>(R.id.markerCardView)
-
-        val LocationView= (getSystemService(LAYOUT_INFLATER_SERVICE)as LayoutInflater).inflate(R.layout.current_location_layout, null)
-        //val text= LocationView.findViewById<TextView>(R.id.markerText)
-        val cardView2= LocationView.findViewById<CardView>(R.id.LocationCardView)
+        //Marikina City
 
 
-        //text.text="Toda Station here!"
-        val bitmap1= Bitmap.createScaledBitmap(viewToBitmap(cardView1)!!,cardView1.width, cardView1.height, false)
-        val smallMarkerIcon1= BitmapDescriptorFactory.fromBitmap(bitmap1)
-        googleMap!!.addMarker(MarkerOptions().position(latlon1).icon(smallMarkerIcon1))
 
-        //text.text="Toda Station here!"
-        val bitmap2= Bitmap.createScaledBitmap(viewToBitmap(cardView1)!!,cardView1.width, cardView1.height, false)
-        val smallMarkerIcon2= BitmapDescriptorFactory.fromBitmap(bitmap2)
-        googleMap!!.addMarker(MarkerOptions().position(latlon2).icon(smallMarkerIcon2))
+        mMap!!.addMarker(MarkerOptions().position(latlon1).title("Toda in Manila City"))
+        mMap!!.addMarker(MarkerOptions().position(latlon2).title("Toda in Manila City"))
+        mMap!!.addMarker(MarkerOptions().position(latlon3).title("Toda in Quezon City"))
+        mMap!!.addMarker(MarkerOptions().position(latlon4).title("Toda in Quezon City"))
+        mMap!!.addMarker(MarkerOptions().position(latlon5).title("Toda in Quezon City"))
+        mMap!!.addMarker(MarkerOptions().position(latlon6).title("Toda in Quezon City"))
+        mMap!!.addMarker(MarkerOptions().position(latlon7).title("Toda in Quezon City"))
 
-        //text.text="Toda Station here!"
-        val bitmap3= Bitmap.createScaledBitmap(viewToBitmap(cardView1)!!,cardView1.width, cardView1.height, false)
-        val smallMarkerIcon3= BitmapDescriptorFactory.fromBitmap(bitmap3)
-        googleMap!!.addMarker(MarkerOptions().position(latlon3).icon(smallMarkerIcon3))
-
-        //text.text="Toda Station here!"
-        val bitmap4= Bitmap.createScaledBitmap(viewToBitmap(cardView1)!!,cardView1.width, cardView1.height, false)
-        val smallMarkerIcon4= BitmapDescriptorFactory.fromBitmap(bitmap4)
-        googleMap!!.addMarker(MarkerOptions().position(latlon4).icon(smallMarkerIcon4))
-
-        //text.text="Toda Station here!"
-        val bitmap5= Bitmap.createScaledBitmap(viewToBitmap(cardView1)!!,cardView1.width, cardView1.height, false)
-        val smallMarkerIcon5= BitmapDescriptorFactory.fromBitmap(bitmap5)
-        googleMap!!.addMarker(MarkerOptions().position(latlon5).icon(smallMarkerIcon5))
-
-        //text.text="Toda Station here!"
-        val bitmap6= Bitmap.createScaledBitmap(viewToBitmap(cardView1)!!,cardView1.width, cardView1.height, false)
-        val smallMarkerIcon6= BitmapDescriptorFactory.fromBitmap(bitmap6)
-        googleMap!!.addMarker(MarkerOptions().position(latlon6).icon(smallMarkerIcon6))
-
-        //text.text="Toda Station here!"
-        val bitmap7= Bitmap.createScaledBitmap(viewToBitmap(cardView1)!!,cardView1.width, cardView1.height, false)
-        val smallMarkerIcon7= BitmapDescriptorFactory.fromBitmap(bitmap7)
-        googleMap!!.addMarker(MarkerOptions().position(latlon7).icon(smallMarkerIcon7))
-
-        
-
-        //text.text="Current Location here!"
-        val bitmap0= Bitmap.createScaledBitmap(viewToBitmap(cardView2)!!,cardView1.width, cardView1.height, false)
-        val smallMarkerIcon0= BitmapDescriptorFactory.fromBitmap(bitmap0)
-        googleMap!!.addMarker(MarkerOptions().position(latlon0).icon(smallMarkerIcon0))
-
-
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlon1, 10f))
     }
 
-    private fun viewToBitmap(view: View): Bitmap?{
-        view.measure(View.MeasureSpec.UNSPECIFIED,View.MeasureSpec.UNSPECIFIED)
-        val bitmap= Bitmap.createBitmap(view.measuredWidth, view.measuredHeight,Bitmap.Config.ARGB_8888)
-        val canvas= Canvas(bitmap)
-        view.layout(0,0, view.measuredWidth, view.measuredHeight)
-        view.draw(canvas)
-        return bitmap
 
+
+    private val bicycleIcon: BitmapDescriptor by lazy {
+        val color = ContextCompat.getColor(this, R.color.white)
+        BitmapHelper.vectorToBitmap(this, R.drawable.toda, color)
+    }
+
+
+    // function to find Routes.
+    private fun Findroutes(Start: LatLng?, End: LatLng?) {
+        if (Start == null || End == null) {
+            Toast.makeText(this@MainActivity, "Unable to get location", Toast.LENGTH_LONG).show()
+        } else {
+            val routing = Routing.Builder()
+                .travelMode(AbstractRouting.TravelMode.DRIVING)
+                .withListener(this)
+                .alternativeRoutes(true)
+                .waypoints(Start, End)
+                .key("AIzaSyCLggMgPZ2whs7xgJGRA-Y7lLTSgwgSodQ") //also define your api key here.
+                .build()
+            routing.execute()
+        }
+    }
+
+    //Routing call back functions.
+    override fun onRoutingFailure(e: RouteException) {
+        val parentLayout = findViewById<View>(android.R.id.content)
+        val snackbar = Snackbar.make(parentLayout, e.toString(), Snackbar.LENGTH_LONG)
+        snackbar.show()
+                Findroutes(start,end)
+    }
+
+    override fun onRoutingStart() {
+        Toast.makeText(this@MainActivity, "Finding Route...", Toast.LENGTH_LONG).show()
+    }
+
+    //If Route finding success..
+    override fun onRoutingSuccess(route: ArrayList<Route>, shortestRouteIndex: Int) {
+        val center = CameraUpdateFactory.newLatLng(start)
+        val zoom = CameraUpdateFactory.zoomTo(16f)
+        if (polylines != null) {
+            polylines!!.clear()
+        }
+        val polyOptions = PolylineOptions()
+        var polylineStartLatLng: LatLng? = null
+        var polylineEndLatLng: LatLng? = null
+        polylines = ArrayList()
+        //add route(s) to the map using polyline
+        for (i in route.indices) {
+            if (i == shortestRouteIndex) {
+                polyOptions.color(resources.getColor(R.color.black))
+                polyOptions.width(7f)
+                polyOptions.addAll(route[shortestRouteIndex].points)
+                val polyline = mMap!!.addPolyline(polyOptions)
+                polylineStartLatLng = polyline.points[0]
+                val k = polyline.points.size
+                polylineEndLatLng = polyline.points[k - 1]
+                (polylines as ArrayList<Polyline>).add(polyline)
+            } else { }
+        }
+
+        //Add Marker on route starting position
+        val startMarker = MarkerOptions()
+        startMarker.position(polylineStartLatLng!!)
+        startMarker.title("My Location")
+        mMap!!.addMarker(startMarker)
+
+        //Add Marker on route ending position
+        val endMarker = MarkerOptions()
+        endMarker.position(polylineEndLatLng!!)
+        endMarker.title("Destination")
+        mMap!!.addMarker(endMarker)
+    }
+
+    override fun onRoutingCancelled() {
+        Findroutes(start, end)
+    }
+
+    override fun onConnectionFailed(connectionResult: ConnectionResult) {
+        Findroutes(start, end)
+    }
+
+    companion object {
+        //to get location permissions.
+        private const val LOCATION_REQUEST_CODE = 23
     }
 }
-
