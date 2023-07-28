@@ -67,8 +67,8 @@ fun WelcomeScreen() {
                 Spacer(modifier = Modifier.height(15.dp)
                 )
 
-                //RoundedButtonGoogle
-                //aayusin ko kasi natanggal ko
+                RoundedButtonGoogle(text = " Continue with Google") {
+                }
 
 
                 Spacer(modifier = Modifier.height(170.dp)
