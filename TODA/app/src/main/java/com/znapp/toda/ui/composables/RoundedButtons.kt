@@ -30,7 +30,7 @@ import com.znapp.toda.ui.theme.TODATheme
 fun RoundedButtonGoogle(
     text: String,
     modifier: Modifier = Modifier,
-    onClick: ()->Unit
+    onClick: () -> Unit
 
 ){
 
@@ -180,7 +180,7 @@ fun RoundedButtonLogin(
 @Composable
 fun RoundedButtonGooglePreview() {
     TODATheme {
-        RoundedButtonGoogle(text = " Continue with Google") {
+        RoundedButtonGoogle(text = "Continue with Google") {
         }
     }
 }

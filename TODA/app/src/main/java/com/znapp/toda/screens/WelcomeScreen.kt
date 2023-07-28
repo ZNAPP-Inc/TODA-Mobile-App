@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,9 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.znapp.toda.R
-import com.znapp.toda.ui.composables.RoundedButtonEmail
 import com.znapp.toda.ui.composables.RoundedButtonGoogle
-import com.znapp.toda.ui.composables.RoundedButtonTODA
 import com.znapp.toda.ui.theme.Montserrat
 import com.znapp.toda.ui.theme.TODATheme
 
@@ -70,8 +67,9 @@ fun WelcomeScreen() {
                 Spacer(modifier = Modifier.height(15.dp)
                 )
 
-                RoundedButtonGoogle(text = " Continue with Google") {
-                }
+                //RoundedButtonGoogle
+                //aayusin ko kasi natanggal ko
+
 
                 Spacer(modifier = Modifier.height(170.dp)
                 )

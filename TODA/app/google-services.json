@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1068351061113",
+    "project_id": "toda-3a2e7",
+    "storage_bucket": "toda-3a2e7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1068351061113:android:725c20cc6ac28f385468a8",
+        "android_client_info": {
+          "package_name": "com.znapp.toda"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1068351061113-og5nt3676pi6j2hpofhs27t7ogcuf7sd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvYYoRzeNTfDifZbVRA5SY7l1LoYNs75c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1068351061113-aebc7gui3jafcmma4n78c9nfbj4sijvo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
