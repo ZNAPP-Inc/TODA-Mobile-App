@@ -1,11 +1,13 @@
 package com.znapp.toda.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -44,7 +46,7 @@ fun WelcomeScreen() {
                 verticalArrangement = Arrangement.Center
             ) {
 
-                Spacer(modifier = Modifier.height(270.dp)
+                Spacer(modifier = Modifier.height(290.dp)
                 )
 
                 Text(
@@ -57,7 +59,7 @@ fun WelcomeScreen() {
                 )
 
                 Text(
-                    text = "Log in or Sign up to continue",
+                    text = "Log in with Google to continue",
                     color = Color.White,
                     fontFamily = Montserrat,
                     fontWeight = FontWeight.Medium,
@@ -68,35 +70,20 @@ fun WelcomeScreen() {
                 Spacer(modifier = Modifier.height(15.dp)
                 )
 
-                RoundedButtonEmail(text = " Sign up with Email") {
-                }
-
-                Spacer(modifier = Modifier.height(13.dp)
-                )
-
                 RoundedButtonGoogle(text = " Continue with Google") {
                 }
 
-                Spacer(modifier = Modifier.height(27.dp)
+                Spacer(modifier = Modifier.height(170.dp)
                 )
 
-                Text(
-                    text = "Already have an account?",
-                    color = Color.White,
-                    fontFamily = Montserrat,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 14.sp,
-                    textAlign = TextAlign.Center,
+                Image(
+                    painter = painterResource(id = R.drawable.dev_by_znapp),
+                    contentDescription = null
                 )
-
-                Spacer(modifier = Modifier.height(15.dp)
-                )
-
-                RoundedButtonTODA(text = " Log in with TODA Account") {
             }
         }
     }
-}
+
 @Preview
 @Composable
 fun WelcomeScreenPreview() {

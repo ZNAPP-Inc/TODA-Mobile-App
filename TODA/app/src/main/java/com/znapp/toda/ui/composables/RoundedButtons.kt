@@ -40,8 +40,7 @@ fun RoundedButtonGoogle(
         shape = CircleShape,
         elevation = ButtonDefaults.buttonElevation(0.dp,0.dp),
         contentPadding = PaddingValues(20.dp,12.dp),
-        border = BorderStroke(2.dp,Color.White),
-        colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent, contentColor = Color.Unspecified)
+        colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Unspecified)
     ) {
         Icon(
             imageVector = ImageVector.vectorResource(id = R.drawable.google_icon),
@@ -49,7 +48,7 @@ fun RoundedButtonGoogle(
             modifier = Modifier.padding(end = 4.dp)
             )
             Text(text = text,
-                color = Color.White,
+                color = Color.Black,
                 fontFamily = PublicSans,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 14.sp,
