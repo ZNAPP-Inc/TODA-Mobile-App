@@ -3,6 +3,7 @@
 package com.example.toda
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -10,6 +11,7 @@ import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
@@ -64,6 +66,12 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback,
             .findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
 
+        //for restart button
+        val restartButton: Button = findViewById(R.id.restartButton)
+        restartButton.setOnClickListener {
+            // Call the method to restart the app
+            restartApp()
+        }
     }
 
     private fun requestPermission() {
@@ -141,40 +149,105 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback,
             getMyLocation()
         }
 
-        //val latlonPUPCEA = LatLng(14.5988936, 121.0053501)
+        val latlonPUPCEA = LatLng(14.5988936, 121.0053501)
 
 
         //Manila
-        val latlon1 = LatLng(14.600819,121.004582)
-        val latlon2 = LatLng(14.599348,121.011761)
+        val latlonMNL1 = LatLng(14.600819,121.004582)
+        val latlonMNL2 = LatLng(14.599348,121.011761)
+        val latlonMNL3 = LatLng(14.6073528,121.019157)
+        val latlonMNL4 = LatLng(14.6181148,121.016164)
+        val latlonMNL5 = LatLng(14.615180,121.014719)
+
 
         //Quezon City
-        val latlon3 = LatLng(14.650637,121.077718)
-        val latlon4 = LatLng(14.647323,121.074198)
-        val latlon5 = LatLng(14.641898,121.073724)
-        val latlon6 = LatLng(14.641177,121.074379)
-        val latlon7 = LatLng(14.632584,121.073613)
+        val latlonQC1 = LatLng(14.650637,121.077718)
+        val latlonQC2 = LatLng(14.647323,121.074198)
+        val latlonQC3 = LatLng(14.641898,121.073724)
+        val latlonQC4 = LatLng(14.641177,121.074379)
+        val latlonQC5 = LatLng(14.632584,121.073613)
+
+        //Caloocan City
+        //PALTODA Terminal Phase 3 - (14.7606780, 121.0355324)
+        //PALTODA Terminal Phase 5 - (14.7613212, 121.0328324)
+        //PALTODA Terminal Phase 1 - (14.7541742, 121.0401575)
+        //PALTODA Waiting Area Zabarte Town Center - (14.7559817, 121.0424860)
+
+        val latlonCLCN1 = LatLng(14.7606780, 121.0355324)
+        val latlonCLCN2 = LatLng(14.7613212, 121.0328324)
+        val latlonCLCN3 = LatLng(14.7541742, 121.0401575)
+        val latlonCLCN4 = LatLng(14.7559817, 121.0424860)
+
+
 
         //Marikina City
+        //LPSTODAI - (14.633703, 121.083765)
+        //SRMTTODAI - (14.627250, 121.097291)
+        //DACATODAI - (14.623483, 121.096391)
+        //SELVTODAI - (14.632568, 121.096983)
+        //JCSTODAI - (14.632679, 121.097748)
+        //PTJTODAI - (14.6234580, 121.088616)
+        //HRMRTODAI -
+
+        val latlonMRKN1 = LatLng(14.633703, 121.083765)
+        val latlonMRKN2 = LatLng(14.627250, 121.097291)
+        val latlonMRKN3 = LatLng(14.623483, 121.096391)
+        val latlonMRKN4 = LatLng(14.632568, 121.096983)
+        val latlonMRKN5 = LatLng(14.632679, 121.097748)
+        val latlonMRKN6 = LatLng(14.6234580, 121.088616)
+        val latlonMRKN7 = LatLng(14.633465, 121.082405)
+        val latlonMRKN8 = LatLng(14.635557, 121.098304)
+        val latlonMRKN9 = LatLng(14.636369, 121.095595)
+        val latlonMRKN10 = LatLng(14.634172, 121.095165)
+        val latlonMRKN11 = LatLng(14.632494, 121.095510)
+        val latlonMRKN12 = LatLng(14.636586, 121.097553)
+        val latlonMRKN13 = LatLng(14.622781, 121.086930)
+        val latlonMRKN14 = LatLng(14.623405, 121.092817)
+        val latlonMRKN15 = LatLng(14.632453, 121.082980)
+        
+
+        mMap!!.addMarker(MarkerOptions().position(latlonPUPCEA).title("PUP CEA"))
+
+        mMap!!.addMarker(MarkerOptions().position(latlonMNL1).title("Toda in Manila City"))
+        mMap!!.addMarker(MarkerOptions().position(latlonMNL2).title("Toda in Manila City"))
+        mMap!!.addMarker(MarkerOptions().position(latlonMNL3).title("Toda in Manila City"))
+        mMap!!.addMarker(MarkerOptions().position(latlonMNL4).title("Toda in Manila City"))
+        mMap!!.addMarker(MarkerOptions().position(latlonMNL5).title("Toda in Manila City"))
 
 
+        mMap!!.addMarker(MarkerOptions().position(latlonQC1).title("Toda in Quezon City"))
+        mMap!!.addMarker(MarkerOptions().position(latlonQC2).title("Toda in Quezon City"))
+        mMap!!.addMarker(MarkerOptions().position(latlonQC3).title("Toda in Quezon City"))
+        mMap!!.addMarker(MarkerOptions().position(latlonQC4).title("Toda in Quezon City"))
+        mMap!!.addMarker(MarkerOptions().position(latlonQC5).title("Toda in Quezon City"))
 
-        mMap!!.addMarker(MarkerOptions().position(latlon1).title("Toda in Manila City"))
-        mMap!!.addMarker(MarkerOptions().position(latlon2).title("Toda in Manila City"))
-        mMap!!.addMarker(MarkerOptions().position(latlon3).title("Toda in Quezon City"))
-        mMap!!.addMarker(MarkerOptions().position(latlon4).title("Toda in Quezon City"))
-        mMap!!.addMarker(MarkerOptions().position(latlon5).title("Toda in Quezon City"))
-        mMap!!.addMarker(MarkerOptions().position(latlon6).title("Toda in Quezon City"))
-        mMap!!.addMarker(MarkerOptions().position(latlon7).title("Toda in Quezon City"))
 
+        mMap!!.addMarker(MarkerOptions().position(latlonCLCN1).title("PALTODA Terminal Phase 3 in Caloocan City"))
+        mMap!!.addMarker(MarkerOptions().position(latlonCLCN2).title("PALTODA Terminal Phase 5 in Caloocan City"))
+        mMap!!.addMarker(MarkerOptions().position(latlonCLCN3).title("PALTODA Terminal Phase 1 in Caloocan City"))
+        mMap!!.addMarker(MarkerOptions().position(latlonCLCN4).title("PALTODA Waiting Area Zabarte Town Center in Caloocan City"))
+
+        mMap!!.addMarker(MarkerOptions().position(latlonMRKN1).title("LPSTODAI in Marikina City"))
+        mMap!!.addMarker(MarkerOptions().position(latlonMRKN2).title("SRMTTODAI in Marikina City"))
+        mMap!!.addMarker(MarkerOptions().position(latlonMRKN3).title("DACATODAI in Marikina City"))
+        mMap!!.addMarker(MarkerOptions().position(latlonMRKN4).title("SELVTODAI in Marikina City"))
+        mMap!!.addMarker(MarkerOptions().position(latlonMRKN5).title("JCSTODAI in Marikina City"))
+        mMap!!.addMarker(MarkerOptions().position(latlonMRKN6).title("PTJTODAI in Marikina City"))
+        mMap!!.addMarker(MarkerOptions().position(latlonMRKN7).title("Toda in Marikina City"))
+        mMap!!.addMarker(MarkerOptions().position(latlonMRKN8).title("Toda in Marikina City"))
+        mMap!!.addMarker(MarkerOptions().position(latlonMRKN9).title("Toda in Marikina City"))
+        mMap!!.addMarker(MarkerOptions().position(latlonMRKN10).title("Toda in Marikina City"))
+        mMap!!.addMarker(MarkerOptions().position(latlonMRKN11).title("Toda in Marikina City"))
+        mMap!!.addMarker(MarkerOptions().position(latlonMRKN12).title("Toda in Marikina City"))
+        mMap!!.addMarker(MarkerOptions().position(latlonMRKN13).title("Toda in Marikina City"))
+        mMap!!.addMarker(MarkerOptions().position(latlonMRKN14).title("Toda in Marikina City"))
+        mMap!!.addMarker(MarkerOptions().position(latlonMRKN15).title("Toda in Marikina City"))
+
+
+        mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(latlonPUPCEA, 10f))
     }
 
 
-
-    private val bicycleIcon: BitmapDescriptor by lazy {
-        val color = ContextCompat.getColor(this, R.color.white)
-        BitmapHelper.vectorToBitmap(this, R.drawable.toda, color)
-    }
 
 
     // function to find Routes.
@@ -254,5 +327,17 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback,
     companion object {
         //to get location permissions.
         private const val LOCATION_REQUEST_CODE = 23
+    }
+
+    private fun restartApp() {
+        // Create an intent to launch the initial activity of your app
+        val intent = Intent(this, MainActivity::class.java)
+
+        // Clear the activity stack and start the initial activity
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+
+        // Finish the current activity to remove it from the stack
+        finish()
     }
 }
