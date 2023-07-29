@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.znapp.toda.R
+import com.znapp.toda.ui.composables.CardElevationCaloocan1
 import com.znapp.toda.ui.composables.RoundedButtonEmail
 import com.znapp.toda.ui.composables.RoundedButtonGoogle
 import com.znapp.toda.ui.composables.RoundedButtonTODA
@@ -30,14 +33,9 @@ import com.znapp.toda.ui.theme.TODATheme
 
 @Composable
 fun HomeScreen() {
-    Box(
-        modifier = with(Modifier) {
-            fillMaxSize()
-            paint(
-                painterResource(id = R.drawable.toda_welcome_bg),
-                contentScale = ContentScale.FillBounds
-            )
-        })
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = Color(0xFF191414))
     {}
     TODATheme {
         Column (
@@ -46,40 +44,11 @@ fun HomeScreen() {
             verticalArrangement = Arrangement.Center
         ) {
 
-            Spacer(modifier = Modifier.height(290.dp)
+            Spacer(modifier = Modifier.height(10.dp)
             )
 
-            Text(
-                text = "Welcome to TODA",
-                color = Color.White,
-                fontFamily = Montserrat,
-                fontWeight = FontWeight.Bold,
-                fontSize = 24.sp,
-                textAlign = TextAlign.Center
-            )
+            CardElevationCaloocan1()
 
-            Text(
-                text = "Log in with Google to continue",
-                color = Color.White,
-                fontFamily = Montserrat,
-                fontWeight = FontWeight.Medium,
-                fontSize = 14.sp,
-                textAlign = TextAlign.Center
-            )
-
-            Spacer(modifier = Modifier.height(15.dp)
-            )
-
-            RoundedButtonGoogle(text = " Continue with Google") {
-            }
-
-            Spacer(modifier = Modifier.height(170.dp)
-            )
-
-            Image(
-                painter = painterResource(id = R.drawable.dev_by_znapp),
-                contentDescription = null
-            )
         }
     }
 }

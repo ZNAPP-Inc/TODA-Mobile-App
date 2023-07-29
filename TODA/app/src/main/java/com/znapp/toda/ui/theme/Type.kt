@@ -15,7 +15,8 @@ val Montserrat = FontFamily(
 )
 
 val PublicSans = FontFamily(
-    Font(R.font.publicsans_semi_bold, FontWeight.SemiBold)
+    Font(R.font.publicsans_semi_bold, FontWeight.SemiBold),
+    Font(R.font.publicsans_regular, FontWeight.Normal)
 )
 
 val FontAwesome = FontFamily(
