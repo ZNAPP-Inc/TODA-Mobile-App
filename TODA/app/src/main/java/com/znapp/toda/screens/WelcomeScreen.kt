@@ -133,6 +133,5 @@ fun WelcomeScreen(
 @Composable
 fun WelcomeScreenPreview() {
     WelcomeScreen(state = SignInState()) {
-        
     }
 }

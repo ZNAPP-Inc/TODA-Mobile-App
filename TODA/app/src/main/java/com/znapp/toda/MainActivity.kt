@@ -27,6 +27,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.znapp.toda.screens.GoogleAuthUIClient
+import com.znapp.toda.screens.InitialProfileScreen
 import com.znapp.toda.screens.SignInViewModel
 import com.znapp.toda.screens.WelcomeScreen
 import com.znapp.toda.ui.composables.RoundedButtonGoogle
@@ -56,6 +57,12 @@ class MainActivity : ComponentActivity() {
                         val viewModel = viewModel<SignInViewModel>()
                         val state by viewModel.state.collectAsStateWithLifecycle()
 
+                        LaunchedEffect(key1 = Unit) {
+                            if (googleAuthUIClient.getSignedInUser() != null) {
+                                navController.navigate("profile")
+                            }
+                        }
+
                         val launcher = rememberLauncherForActivityResult(
                             contract = ActivityResultContracts.StartIntentSenderForResult(),
                             onResult = { result ->
@@ -71,12 +78,16 @@ class MainActivity : ComponentActivity() {
                         )
 
                         LaunchedEffect(key1 = state.isSignInSuccessful) {
-                            if(state.isSignInSuccessful) {
+                            if (state.isSignInSuccessful) {
                                 Toast.makeText(
                                     applicationContext,
-                                    "Log in with Google is successful!",
+                                    "Log in with Google account is successful!",
                                     Toast.LENGTH_LONG
                                 ).show()
+
+                                navController.navigate("profile")
+                                viewModel.resetState()
+
                             }
                         }
 
@@ -93,10 +104,26 @@ class MainActivity : ComponentActivity() {
                                 }
                             }
                         )
-                        }
+                    }
+                    composable("profile") {
+                        InitialProfileScreen(
+                            userData = googleAuthUIClient.getSignedInUser(),
+                            onSignOut = {
+                                lifecycleScope.launch {
+                                    googleAuthUIClient.signOut()
+                                    Toast.makeText(
+                                        applicationContext,
+                                        "Google account is signed out",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+
+                                    navController.popBackStack()
+                                }
+                            }
+                        )
                     }
                 }
-
             }
         }
     }
+}
