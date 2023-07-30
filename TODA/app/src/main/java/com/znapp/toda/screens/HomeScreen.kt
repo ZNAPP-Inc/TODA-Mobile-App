@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,18 +22,26 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.znapp.toda.R
-import com.znapp.toda.ui.composables.CardElevationCaloocan1
 import com.znapp.toda.ui.composables.RoundedButtonEmail
 import com.znapp.toda.ui.composables.RoundedButtonGoogle
+import com.znapp.toda.ui.composables.RoundedButtonHomeCaloocan
+import com.znapp.toda.ui.composables.RoundedButtonHomeManila
+import com.znapp.toda.ui.composables.RoundedButtonHomeMarikina
+import com.znapp.toda.ui.composables.RoundedButtonHomeQuezonCity
 import com.znapp.toda.ui.composables.RoundedButtonTODA
 import com.znapp.toda.ui.theme.Montserrat
 import com.znapp.toda.ui.theme.TODATheme
 
 @Composable
 fun HomeScreen() {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = Color(0xFF191414))
+    Box(
+        modifier = with(Modifier) {
+            fillMaxSize()
+            paint(
+                painterResource(id = R.drawable.toda_welcome_bg),
+                contentScale = ContentScale.FillBounds
+            )
+        })
     {}
     TODATheme {
         Column (
@@ -44,11 +50,53 @@ fun HomeScreen() {
             verticalArrangement = Arrangement.Center
         ) {
 
-            Spacer(modifier = Modifier.height(10.dp)
+            Spacer(modifier = Modifier.height(290.dp)
             )
 
-            CardElevationCaloocan1()
+            Text(
+                text = "View TODA Routes",
+                color = Color.White,
+                fontFamily = Montserrat,
+                fontWeight = FontWeight.Bold,
+                fontSize = 24.sp,
+                textAlign = TextAlign.Center
+            )
 
+            Text(
+                text = "View available routes from these cities:",
+                color = Color.White,
+                fontFamily = Montserrat,
+                fontWeight = FontWeight.Medium,
+                fontSize = 14.sp,
+                textAlign = TextAlign.Center
+            )
+
+            Spacer(modifier = Modifier.height(15.dp)
+            )
+
+            RoundedButtonHomeCaloocan(text = "Caloocan") {
+            }
+
+            Spacer(modifier = Modifier.height(15.dp)
+            )
+
+            RoundedButtonHomeMarikina(text = "Marikina") {
+            }
+
+            Spacer(modifier = Modifier.height(15.dp)
+            )
+
+            RoundedButtonHomeManila(text = "Manila") {
+            }
+
+            Spacer(modifier = Modifier.height(15.dp)
+            )
+
+            RoundedButtonHomeQuezonCity(text = "Quezon City") {
+            }
+
+            Spacer(modifier = Modifier.height(20.dp)
+            )
         }
     }
 }

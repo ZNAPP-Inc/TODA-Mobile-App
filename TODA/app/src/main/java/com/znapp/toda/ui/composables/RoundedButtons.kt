@@ -176,6 +176,109 @@ fun RoundedButtonLogin(
     }
 }
 
+@Composable
+fun RoundedButtonHomeCaloocan(
+    text: String,
+    modifier: Modifier = Modifier,
+    onClick: ()->Unit
+
+){
+
+    Button(
+        onClick = onClick,
+        modifier = modifier,
+        shape = CircleShape,
+        elevation = ButtonDefaults.buttonElevation(0.dp,0.dp),
+        contentPadding = PaddingValues(20.dp,12.dp),
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1DB954), contentColor = Color(0xFF1DB954))
+    ) {
+        Text(text = text,
+            color = Color.Black,
+            fontFamily = PublicSans,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 14.sp,
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
+@Composable
+fun RoundedButtonHomeMarikina(
+    text: String,
+    modifier: Modifier = Modifier,
+    onClick: ()->Unit
+
+){
+
+    Button(
+        onClick = onClick,
+        modifier = modifier,
+        shape = CircleShape,
+        elevation = ButtonDefaults.buttonElevation(0.dp,0.dp),
+        contentPadding = PaddingValues(20.dp,12.dp),
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1DB954), contentColor = Color(0xFF1DB954))
+    ) {
+        Text(text = text,
+            color = Color.Black,
+            fontFamily = PublicSans,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 14.sp,
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
+@Composable
+fun RoundedButtonHomeManila(
+    text: String,
+    modifier: Modifier = Modifier,
+    onClick: ()->Unit
+
+){
+
+    Button(
+        onClick = onClick,
+        modifier = modifier,
+        shape = CircleShape,
+        elevation = ButtonDefaults.buttonElevation(0.dp,0.dp),
+        contentPadding = PaddingValues(20.dp,12.dp),
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1DB954), contentColor = Color(0xFF1DB954))
+    ) {
+        Text(text = text,
+            color = Color.Black,
+            fontFamily = PublicSans,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 14.sp,
+            textAlign = TextAlign.Center
+        )
+    }
+}
+@Composable
+fun RoundedButtonHomeQuezonCity(
+    text: String,
+    modifier: Modifier = Modifier,
+    onClick: ()->Unit
+
+){
+
+    Button(
+        onClick = onClick,
+        modifier = modifier,
+        shape = CircleShape,
+        elevation = ButtonDefaults.buttonElevation(0.dp,0.dp),
+        contentPadding = PaddingValues(20.dp,12.dp),
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1DB954), contentColor = Color(0xFF1DB954))
+    ) {
+        Text(text = text,
+            color = Color.Black,
+            fontFamily = PublicSans,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 14.sp,
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
 @Preview
 @Composable
 fun RoundedButtonGooglePreview() {
@@ -219,6 +322,42 @@ fun RoundedButtonLoginPreview() {
 fun RoundedButtonEmailPreview() {
     TODATheme {
         RoundedButtonEmail(text = " Sign up with Email") {
+        }
+    }
+}
+
+@Preview
+@Composable
+fun RoundedButtonHomeCaloocan() {
+    TODATheme {
+        RoundedButtonHomeCaloocan(text = "Caloocan") {
+        }
+    }
+}
+
+@Preview
+@Composable
+fun RoundedButtonHomeMarikina() {
+    TODATheme {
+        RoundedButtonHomeMarikina(text = "Marikina") {
+        }
+    }
+}
+
+@Preview
+@Composable
+fun RoundedButtonHomeManila() {
+    TODATheme {
+        RoundedButtonHomeManila(text = "Manila") {
+        }
+    }
+}
+
+@Preview
+@Composable
+fun RoundedButtonHomeQuezonCity() {
+    TODATheme {
+        RoundedButtonHomeQuezonCity(text = "Quezon City") {
         }
     }
 }
