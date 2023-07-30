@@ -8,7 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.znapp.toda.screens.WelcomeScreen
 
-@Composable
+/*@Composable
 fun SetupNavGraph(
     navController: NavHostController
 ){
@@ -22,4 +22,4 @@ fun SetupNavGraph(
             WelcomeScreen()
         }
     }
-}
+}*/
