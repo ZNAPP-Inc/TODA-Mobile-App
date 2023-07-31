@@ -26,7 +26,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.znapp.toda.R
-import com.znapp.toda.screens.SignInState
 import com.znapp.toda.ui.theme.PublicSans
 import com.znapp.toda.ui.theme.TODATheme
 
