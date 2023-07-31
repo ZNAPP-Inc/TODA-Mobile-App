@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.TODA.MySplash" parent="Theme.SplashScreen">
+    <style name="Theme.Toda.MySplash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">#191414</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/toda_icon_ss_01</item>
         <item name="windowSplashScreenAnimationDuration">600</item>
-        <item name="postSplashScreenTheme">@style/Theme.TODA</item>
+        <item name="postSplashScreenTheme">@style/Theme.Toda</item>
     </style>
 </resources>
