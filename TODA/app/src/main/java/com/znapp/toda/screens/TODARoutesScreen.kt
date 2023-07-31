@@ -23,7 +23,7 @@ import com.znapp.toda.ui.theme.Montserrat
 import com.znapp.toda.ui.theme.TODATheme
 
 @Composable
-fun CaloocanScreen() {
+fun TODARoutesScreen() {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color(0xFF191414))
@@ -57,6 +57,6 @@ fun CaloocanScreen() {
 
 @Preview
 @Composable
-fun CaloocanScreenPreview() {
-    CaloocanScreen()
+fun TODARoutesScreenPreview() {
+    TODARoutesScreen()
 }
